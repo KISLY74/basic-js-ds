@@ -14,10 +14,30 @@ module.exports = class BinarySearchTree {
   root() {
     return this.rootNode
   }
-  has(data) {
-    return searchWithin(this.rootNode, data)
+  add(data) {
+    this.rootNode = addNode(this.rootNode, data)
 
-    function searchWithin(node, data) {
+    function addNode(node, data) {
+      if (!node) {
+        return new Node(data)
+      }
+
+      if (node.data === data) {
+        return node
+      }
+
+      if (data < node.data) {
+        node.left = addNode(node.left, data)
+      }
+      else {
+        node.right = addNode(node.right, data)
+      }
+      return node
+    }
+  }
+  has(data) {
+
+    function searchNode(node, data) {
       if (!node) {
         return false
       }
@@ -26,14 +46,14 @@ module.exports = class BinarySearchTree {
         return true
       }
 
-      return data < node.data ? searchWithin(node.left, data) : searchWithin(node.right, data)
+      return data < node.data ? searchNode(node.left, data) : searchNode(node.right, data)
     }
+    return searchNode(this.rootNode, data)
   }
   find(data) {
-    return findNode(this.rootNode, data)
 
     function findNode(node, data) {
-      if (node === null) {
+      if (!node) {
         return null
       }
 
@@ -43,6 +63,7 @@ module.exports = class BinarySearchTree {
 
       return data < node.data ? findNode(node.left, data) : findNode(node.right, data)
     }
+    return findNode(this.rootNode, data)
   }
   remove(data) {
     this.rootNode = removeNode(this.rootNode, data)
@@ -75,13 +96,13 @@ module.exports = class BinarySearchTree {
           return node
         }
 
-        let minFromRight = node.right
-        while (minFromRight.left) {
-          minFromRight = minFromRight.left
+        let minRight = node.right
+        while (minRight.left) {
+          minRight = minRight.left
         }
-        node.data = minFromRight.left
+        node.data = minRight.data
 
-        node.right = removeNode(node.right, minFromRight.data)
+        node.right = removeNode(node.right, minRight.data)
         return node
       }
     }
@@ -107,27 +128,6 @@ module.exports = class BinarySearchTree {
       node = node.right
     }
     return node.data
-  }
-  add(data) {
-    this.rootNode = addWithin(this.rootNode, data)
-
-    function addWithin(node, data) {
-      if (!node) {
-        return new Node(data)
-      }
-
-      if (node.data === data) {
-        return node
-      }
-
-      if (data < node.data) {
-        node.left = addWithin(node.left, data)
-      }
-      else {
-        node.right = addWithin(node.right, data)
-      }
-      return node
-    }
   }
 
 }
