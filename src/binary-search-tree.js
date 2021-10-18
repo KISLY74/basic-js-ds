@@ -30,7 +30,19 @@ module.exports = class BinarySearchTree {
     }
   }
   find(data) {
+    return searchWithin(this.rootNode, data)
 
+    function searchWithin(node, data) {
+      if (node === null) {
+        return null
+      }
+
+      if (node.data === data) {
+        return node
+      }
+
+      return data < node.data ? searchWithin(node.left, data) : searchWithin(node.right, data)
+    }
   }
   remove(data) {
     this.rootNode = removeNode(this.rootNode, data)
@@ -44,7 +56,7 @@ module.exports = class BinarySearchTree {
         node.left = removeNode(node.left, data)
         return node
       }
-      else if (node.data < data) {
+      else if (data > node.data) {
         node.right = removeNode(node.right, data)
         return node
       }
