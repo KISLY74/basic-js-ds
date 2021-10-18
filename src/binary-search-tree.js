@@ -9,13 +9,13 @@ const { Node } = require('../extensions/list-tree.js');
 module.exports = class BinarySearchTree {
 
   constructor() {
-    this.root = null
+    this.rootNode = null
   }
   root() {
-    return this.root
+    return this.rootNode
   }
   has(data) {
-    return searchWithin(this.root, data)
+    return searchWithin(this.rootNode, data)
 
     function searchWithin(node, data) {
       if (!node) {
@@ -33,7 +33,7 @@ module.exports = class BinarySearchTree {
 
   }
   remove(data) {
-    this.root = removeNode(this.root, data)
+    this.rootNode = removeNode(this.rootNode, data)
 
     function removeNode(node, data) {
       if (!node) {
@@ -75,7 +75,7 @@ module.exports = class BinarySearchTree {
     }
   }
   min() {
-    let node = this.root
+    let node = this.rootNode
     if (!node) {
       return
     }
@@ -86,7 +86,7 @@ module.exports = class BinarySearchTree {
     return node.data
   }
   max() {
-    let node = this.root
+    let node = this.rootNode
     if (!node) {
       return
     }
@@ -97,7 +97,7 @@ module.exports = class BinarySearchTree {
     return node.data
   }
   add(data) {
-    this.root = addWithin(this.root, data)
+    this.rootNode = addWithin(this.rootNode, data)
 
     function addWithin(node, data) {
       if (!node) {
